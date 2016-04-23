@@ -1,0 +1,26 @@
+<ion-view view-title="Create Account" name="app-createaccount">
+    <ion-content>
+            <div class="photoball" ng-click="openImagePicker()">
+                <i class="ion-ios-camera"></i>
+            </div>
+        <div class="content">
+            <div class="row row-center">
+                <div class="col">
+                    <h2>Create Account.</h2>
+                    <p ng-bind="photopath"></p>
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="email" required placeholder="your email address" name="email">
+                        </label>
+                    </div>
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="password" required placeholder="your password">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+

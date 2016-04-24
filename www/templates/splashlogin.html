@@ -5,17 +5,23 @@
             <div class="row row-center">
                 <div class="col"><h1 class="white">BLESS</h1>
                     <em>together, we can bless the world.</em>
-
+                    <ul ng-if="error">
+                        <li class="assertive">{{error}}</li>
+                    </ul>
+                    <form name="loginForm" ng-submit="processLogin()">
                     <div class="list list-inset">
                         <label class="item item-input">
-                            <input type="email" required placeholder="email address" name="email">
+                            <input type="email" required placeholder="email address" id="email" name="email" ng-model="email">
                         </label>
                         </div>
                     <div class="list list-inset">
                         <label class="item item-input">
-                            <input type="password" required placeholder="password">
+                            <input type="password" required placeholder="password" id="password" ng-model="password">
                         </label>
-                    </div>
+                    </div><div class="list list-inset">
+                        <label class="item item-input">
+                        <input type="submit" value="Login" /></label></div>
+                    </form>
                 </div>
             </div>
         </div>

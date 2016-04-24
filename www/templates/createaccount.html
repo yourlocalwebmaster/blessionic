@@ -7,17 +7,34 @@
             <div class="row row-center">
                 <div class="col">
                     <h2>Create Account.</h2>
+                    <ul ng-if="errors">
+                    <li class="assertive" ng-repeat="error in errors">{{error[0]}}</li>
+                    </ul>
                     <p ng-bind="photopath"></p>
+                    <form name="createaccountform" ng-submit="processCreateAccount()">
                     <div class="list list-inset">
                         <label class="item item-input">
-                            <input type="email" required placeholder="your email address" name="email">
+                            <input type="text" required placeholder="your full name" name="name" ng-model="name" id="name">
+                        </label>
+                    </div>
+
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="email" required placeholder="your email address" name="email" ng-model="email" id="email">
                         </label>
                     </div>
                     <div class="list list-inset">
                         <label class="item item-input">
-                            <input type="password" required placeholder="your password">
+                            <input type="password" required placeholder="your password" ng-model="password">
                         </label>
                     </div>
+
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="submit" value="Sign up">
+                        </label>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>

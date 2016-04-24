@@ -1,6 +1,6 @@
 angular.module('bless.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, Restangular) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -39,14 +39,33 @@ angular.module('bless.controllers', [])
     }, 1000);
   };
 })
-.controller('LoginSplashCtrl',function($scope,$state,$localStorage){
-
+.controller('LoginSplashCtrl',function($scope,$state,$localStorage, Restangular){
   $scope.$on('$ionicView.enter', function(e) {
-    console.log('splash entered');
+    delete $localStorage.token; // delete when accessing login page...
   });
+
+    $scope.processLogin = function(){
+        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        var payload = {"password":this.password,"email":this.email};
+        Restangular.all('user/login').post(payload).then(function(response){
+            if(response.status){
+                $localStorage.token = response.token;
+                $state.go('app.home');
+            }else{
+                $scope.error = response.message;
+            }
+        });
+    };
+
+
 })
-.controller('HomeCtrl', function($scope,$state,$localStorage){
-  $scope.logout = function(){
+.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular){
+  Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+  var User = Restangular.one('user/account');
+  User.get({'token':$localStorage.token}).then(function(response) {
+      $scope.me = response;
+  });
+    $scope.logout = function(){
     delete $localStorage.token;
     $state.go('splashlogin');
   };
@@ -55,8 +74,11 @@ angular.module('bless.controllers', [])
     console.log('home entered');
   });
 })
-    .controller('CreateAccountCtrl',function($scope, $cordovaImagePicker) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaImagePicker, Restangular) {
 
+        $scope.$on('$ionicView.enter', function(e) {
+
+        });
         document.addEventListener("deviceready", function () {
             console.log('ready!');
             var options = {
@@ -76,4 +98,19 @@ angular.module('bless.controllers', [])
                 });
 
         });
+
+        $scope.processCreateAccount = function() {
+            Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+            var payload = {"password":this.password,"email":this.email,"name":this.name};
+            //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+            Restangular.all('user').post(payload).then(function(response){
+                if(response.status){
+                    $localStorage.token = response.token;
+                    $state.go('app.home');
+                }else{
+                    $scope.errors = response.errors;
+                }
+            });
+        }
+
     });

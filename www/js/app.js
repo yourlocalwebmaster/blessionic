@@ -46,15 +46,28 @@ angular.module('bless', ['ionic','restangular', 'bless.controllers','bless.direc
           }
         }
       })
-          .state('app.createaccount', {
+          .state('createaccount', {
         url: '/createaccount',
+        templateUrl: 'templates/createaccount.html',
+        controller: 'CreateAccountCtrl'
+        
+      })
+      .state('app.terms',{
+        url: '/terms',
         views:{
           'menuContent':{
-            templateUrl: 'templates/createaccount.html',
-            controller: 'CreateAccountCtrl'
+            templateUrl: 'templates/terms.html'
           }
         }
-      });
+      })
+      .state('app.privacy',{
+    url: '/privacy',
+    views:{
+      'menuContent':{
+        templateUrl: 'templates/privacy.html'
+      }
+    }
+  });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splashlogin');

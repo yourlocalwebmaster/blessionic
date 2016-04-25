@@ -3,11 +3,14 @@
 
         <div class="content">
             <div class="row row-center">
-                <div class="col"><h1 class="white">BLESS</h1>
-                    <em>together, we can bless the world.</em>
-                    <ul ng-if="error">
+                <div class="col">
+                    <div class="list list-inset">
+                        <h1 class="white">BLESS</h1>
+                        <em>together, we can bless the world.</em>
+                        <ul ng-if="error">
                         <li class="assertive">{{error}}</li>
                     </ul>
+                    </div>
                     <form name="loginForm" ng-submit="processLogin()">
                     <div class="list list-inset">
                         <label class="item item-input">
@@ -18,16 +21,15 @@
                         <label class="item item-input">
                             <input type="password" required placeholder="password" id="password" ng-model="password">
                         </label>
-                    </div><div class="list list-inset">
-                        <label class="item item-input">
-                        <input type="submit" value="Login" /></label></div>
+                    </div>
+                        <div class="list list-inset"><button type="submit" class="button button-dark fullwidth">Login</button></div>
                     </form>
                 </div>
             </div>
         </div>
     </ion-content>
     <div class="bar bar-footer">
-        <div class="title"><a href="" ui-sref="app.createaccount">not a member? sign up</a></div>
+        <div class="title"><a href="" ui-sref="createaccount">not a member? sign up</a></div>
     </div>
 </ion-view>
 

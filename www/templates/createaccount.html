@@ -1,4 +1,4 @@
-<ion-view view-title="Create Account" name="app-createaccount">
+<ion-view view-title="Create Account" hide-nav-bar="true" name="app-createaccount">
     <ion-content>
             <div class="photoball" ng-click="openImagePicker()">
                 <i class="ion-ios-camera"></i>
@@ -6,7 +6,7 @@
         <div class="content">
             <div class="row row-center">
                 <div class="col">
-                    <h2>Create Account.</h2>
+                    <div class="list list-inset"><h2>Create Account.</h2></div>
                     <ul ng-if="errors">
                     <li class="assertive" ng-repeat="error in errors">{{error[0]}}</li>
                     </ul>
@@ -28,12 +28,23 @@
                             <input type="password" required placeholder="your password" ng-model="password">
                         </label>
                     </div>
+                        <div class="list" style="width:100px;margin-left:auto;margin-right:auto;text-align: center;">
+                            notifications
+                            <label class="toggle toggle-grey">
+                                <input type="checkbox">
+                                <div class="track">
+                                    <div class="handle"></div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="list list-inset">
+                        <button type="submit" class="button button-dark fullwidth">Sign up</button>
+                        </div>
 
-                    <div class="list list-inset">
-                        <label class="item item-input">
-                            <input type="submit" value="Sign up">
-                        </label>
-                    </div>
+                        <div class="list list-inset smallprint text-center">
+                            by clicking "Sign up" you are agreeing to our <a href="" ui-sref="app.terms">terms</a> & <a href="" ui-sref="app.privacy">privacy policy</a>
+                        </div>
+
                     </form>
                 </div>
             </div>

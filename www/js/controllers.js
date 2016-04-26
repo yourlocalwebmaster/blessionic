@@ -41,7 +41,9 @@ angular.module('bless.controllers', [])
 })
 .controller('LoginSplashCtrl',function($scope,$state,$localStorage, Restangular){
   $scope.$on('$ionicView.enter', function(e) {
-    delete $localStorage.token; // delete when accessing login page...
+    if($localStorage.token){
+        $state.go('app.home'); // There has to be a faster way to do this.. Maybe hide form until check? progress bar? etc...
+    }
   });
 
     $scope.processLogin = function(){
@@ -92,12 +94,34 @@ angular.module('bless.controllers', [])
     console.log('home entered');
   });
 })
-    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $ionicGesture,Restangular,$ionicHistory) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $ionicGesture,Restangular,$ionicHistory, $cordovaGeolocation) {
 
         $ionicGesture.on('swiperight', function(){
             $ionicHistory.goBack(-1);
         },angular.element(document.querySelector('body')));
 
+        $scope.setLocation = function(){
+            document.addEventListener("deviceready",function(){
+                console.log('settign location');
+                var posOptions = {timeout: 10000, enableHighAccuracy: false};
+                $cordovaGeolocation
+                    .getCurrentPosition(posOptions)
+                    .then(function (position) {
+                        var lat  = position.coords.latitude
+                        var long = position.coords.longitude
+                        alert(lat+long);
+                        /*try{
+                         var UserLocation = Restangular.one('http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true');
+                         UserLocation.get({'latlng':lat+','+long,'sensor':true}).then(function(response) {
+                         console.log(response);
+                         });
+                         }*/
+                        console.log(lat+' '+long);
+                    }, function(err) {
+                        console.log(err);
+                    });
+            });
+        };
 
         $scope.setAvatar = function(){
             document.addEventListener("deviceready", function () {

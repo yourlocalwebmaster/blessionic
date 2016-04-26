@@ -1,6 +1,6 @@
 <ion-view view-title="Create Account" hide-nav-bar="true" name="app-createaccount">
     <ion-content>
-            <div class="photoball" ng-click="openImagePicker()">
+            <div class="photoball" ng-click="setAvatar()">
                 <i class="ion-ios-camera"></i>
             </div>
         <div class="content">
@@ -17,6 +17,8 @@
                             <input type="text" required placeholder="your full name" name="name" ng-model="name" id="name">
                         </label>
                     </div>
+
+                    <input type="hidden" required placeholder="hopefully base64" name="avatar" ng-model="avatar" id="avatar">
 
                     <div class="list list-inset">
                         <label class="item item-input">

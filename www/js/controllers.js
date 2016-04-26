@@ -72,12 +72,13 @@ angular.module('bless.controllers', [])
             loop: true
         });
         console.log('upd');
+        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        var User = Restangular.one('user/account');
+        User.get({'token':$localStorage.token}).then(function(response) {
+            $scope.me = response;
+        });
     });
-    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
-  var User = Restangular.one('user/account');
-  User.get({'token':$localStorage.token}).then(function(response) {
-      $scope.me = response;
-  });
+
     $scope.logout = function(){
     delete $localStorage.token;
     $state.go('splashlogin');
@@ -87,34 +88,43 @@ angular.module('bless.controllers', [])
     console.log('home entered');
   });
 })
-    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaImagePicker, Restangular) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, Restangular) {
+
 
         $scope.$on('$ionicView.enter', function(e) {
 
         });
-        /*document.addEventListener("deviceready", function () {
-            console.log('ready!');
-            var options = {
-                maximumImagesCount: 10,
-                width: 800,
-                height: 800,
-                quality: 80
-            };
+        $scope.setAvatar = function(){
+            document.addEventListener("deviceready", function () {
 
-            $cordovaImagePicker.getPictures(options)
-                .then(function (results) {
-                    for (var i = 0; i < results.length; i++) {
-                        console.log('Image URI: ' + results[i]);
-                    }
-                }, function (error) {
-                    console.log(error);
+                var options = {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 100,
+                    targetHeight: 100,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false,
+                    correctOrientation:true
+                };
+
+                $cordovaCamera.getPicture(options).then(function(imageData) {
+                    var image = document.getElementById('myImage');
+                    //image.src = "data:image/jpeg;base64," + imageData;
+                    $scope.avatar = "data:image/jpeg;base64," + imageData;
+
+                }, function(err) {
+                    // error
                 });
 
-        });*/
+            }, false);
+        };
 
         $scope.processCreateAccount = function() {
             Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
-            var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications};
+            var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
             //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
             Restangular.all('user').post(payload).then(function(response){
                 if(response.status){

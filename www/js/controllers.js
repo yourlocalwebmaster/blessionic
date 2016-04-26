@@ -60,13 +60,17 @@ angular.module('bless.controllers', [])
 
 })
 .controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform){
-
+    $scope.toggleLeft = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+    $scope.myevents = true;
+    $scope.myjoinedevents = false;
     $ionicPlatform.ready(function() {
         var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
+            //pagination: '.swiper-pagination',
             slidesPerView: 4,
             centeredSlides: true,
-            paginationClickable: true,
+            paginationClickable: false,
             spaceBetween: 30,
             freeMode: false,
             loop: true
@@ -88,23 +92,24 @@ angular.module('bless.controllers', [])
     console.log('home entered');
   });
 })
-    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, Restangular) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $ionicGesture,Restangular,$ionicHistory) {
+
+        $ionicGesture.on('swiperight', function(){
+            $ionicHistory.goBack(-1);
+        },angular.element(document.querySelector('body')));
 
 
-        $scope.$on('$ionicView.enter', function(e) {
-
-        });
         $scope.setAvatar = function(){
             document.addEventListener("deviceready", function () {
-
                 var options = {
-                    quality: 50,
+                    quality: 80,
                     destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.CAMERA,
+                    //sourceType: Camera.PictureSourceType.CAMERA,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                     allowEdit: true,
                     encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 100,
-                    targetHeight: 100,
+                    targetWidth: 200,
+                    targetHeight: 200,
                     popoverOptions: CameraPopoverOptions,
                     saveToPhotoAlbum: false,
                     correctOrientation:true
@@ -114,6 +119,7 @@ angular.module('bless.controllers', [])
                     var image = document.getElementById('myImage');
                     //image.src = "data:image/jpeg;base64," + imageData;
                     $scope.avatar = "data:image/jpeg;base64," + imageData;
+                    
 
                 }, function(err) {
                     // error

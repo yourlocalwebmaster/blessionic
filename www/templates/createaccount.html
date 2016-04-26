@@ -1,7 +1,7 @@
 <ion-view view-title="Create Account" hide-nav-bar="true" name="app-createaccount">
     <ion-content>
-            <div class="photoball" ng-click="setAvatar()">
-                <i class="ion-ios-camera"></i>
+            <div class="photoball" ng-click="setAvatar()" style="background-image: url('{{avatar}}') !important;">
+                <i class="ion-ios-camera" ng-if="!avatar"></i>
             </div>
         <div class="content">
             <div class="row row-center">

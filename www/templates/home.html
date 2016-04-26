@@ -1,21 +1,37 @@
 <ion-view view-title="Home" name="app-home">
     <ion-content>
-        <h1>Welcome Home, {{me.name}}</h1>
-        <div class="avatar photoball" style="background-image:url({{me.avatar}});"></div>
-
-
-
-        <!--<div class="row">
-            <div class="col text-center">
-                <div class="blackball" data-ballid="1">1</div>
-                <div class="blackball" data-ballid="2">2</div>
-                <div class="blackball" data-ballid="3">3</div>
-                <div class="blackball" data-ballid="4">4</div>
-                <div class="blackball" data-ballid="5">5</div>
+        <div class="content">
+            <div class="row row-center">
+                <div class="col"><div class="avatar photoball" style="background-image:url({{me.avatar}});"></div></div>
             </div>
-        </div>-->
-        <!-- Swiper -->
-        <div class="swiper-container">
+            <div class="row">
+                <div class="col">
+                    <div class="meta_block text-center">
+                        <div class="headline"><em>{{me.name}}</div>
+                        <div class="subheadline">
+                            <span ng-if="me.location">{{me.location}}</span>
+                            <span ng-if="!me.location">set your location</span>
+                        </div>
+                        <div class="content userstatus">
+                            I'm here to be a blessing in SD and meet other like-minded locals.<br/>
+                            Psalm 143:8
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-50 text-center" ng-click="myevents=true;myjoinedevents=false;" ng-class='{"faded":myevents==false}'>
+                    <i class="ion-chevron-down"></i><br/>
+                    my bless events
+                </div>
+                <div class="col-50 text-center" ng-click="myevents=false;myjoinedevents=true;" ng-class='{"faded":myjoinedevents==false}'>
+                    <i class="ion-chevron-down"></i>
+                    <br/>
+                    events i've joined
+                </div>
+            </div>
+        <!-- My Bless Events -->
+        <div class="swiper-container" ng-show="myevents">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><div class="blackball">Feed homeless</div></div>
                 <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
@@ -24,11 +40,22 @@
                 <div class="swiper-slide"><div class="blackball">Cat Visit</div></div>
                 <div class="swiper-slide"><div class="blackball">Run around</div></div>
             </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
         </div>
 
-        <a ng-click="logout()" href="">logout</a>
+        <!-- Participating in Swiper -->
+        <div class="swiper-container" ng-show="myjoinedevents">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><div class="blackball">Visit Sick</div></div>
+                <div class="swiper-slide"><div class="blackball">Becah Cleanup</div></div>
+                <div class="swiper-slide"><div class="blackball">Cat Visit</div></div>
+                <div class="swiper-slide"><div class="blackball">Run around</div></div>
+                <div class="swiper-slide"><div class="blackball">Feed homeless</div></div>
+                <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
+            </div>
+        </div>
+
+        <div class="row"><a ng-click="logout()" href="">logout</a></div>
+        </div>
     </ion-content>
 </ion-view>
 

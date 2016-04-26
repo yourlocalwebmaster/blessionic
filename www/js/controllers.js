@@ -59,8 +59,19 @@ angular.module('bless.controllers', [])
 
 
 })
-.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular){
-  Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform){
+
+    $ionicPlatform.ready(function() {
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 4,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 30
+        });
+        console.log('upd');
+    });
+    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
   var User = Restangular.one('user/account');
   User.get({'token':$localStorage.token}).then(function(response) {
       $scope.me = response;
@@ -79,7 +90,7 @@ angular.module('bless.controllers', [])
         $scope.$on('$ionicView.enter', function(e) {
 
         });
-        document.addEventListener("deviceready", function () {
+        /*document.addEventListener("deviceready", function () {
             console.log('ready!');
             var options = {
                 maximumImagesCount: 10,
@@ -97,11 +108,11 @@ angular.module('bless.controllers', [])
                     console.log(error);
                 });
 
-        });
+        });*/
 
         $scope.processCreateAccount = function() {
             Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
-            var payload = {"password":this.password,"email":this.email,"name":this.name};
+            var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications};
             //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
             Restangular.all('user').post(payload).then(function(response){
                 if(response.status){

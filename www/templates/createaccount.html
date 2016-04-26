@@ -31,7 +31,7 @@
                         <div class="list" style="width:100px;margin-left:auto;margin-right:auto;text-align: center;">
                             notifications
                             <label class="toggle toggle-grey">
-                                <input type="checkbox">
+                                <input type="checkbox" name="notifications" id="notifications" ng-model="notifications">
                                 <div class="track">
                                     <div class="handle"></div>
                                 </div>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="list list-inset smallprint text-center">
-                            by clicking "Sign up" you are agreeing to our <a href="" ui-sref="app.terms">terms</a> & <a href="" ui-sref="app.privacy">privacy policy</a>
+                            by clicking "Sign up" you are agreeing to our <a ui-sref="app.terms">terms</a> & <a href="" ui-sref="app.privacy">privacy policy</a>
                         </div>
 
                     </form>

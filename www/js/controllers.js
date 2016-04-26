@@ -68,7 +68,8 @@ angular.module('bless.controllers', [])
             centeredSlides: true,
             paginationClickable: true,
             spaceBetween: 30,
-            freeMode: true
+            freeMode: true,
+            loop: true
         });
         console.log('upd');
     });

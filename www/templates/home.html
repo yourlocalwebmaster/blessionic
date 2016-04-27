@@ -2,12 +2,12 @@
     <ion-content>
         <div class="content">
             <div class="row row-center">
-                <div class="col"><div class="avatar photoball" style="background-image:url({{me.avatar}});"></div></div>
+                <div class="col"><div class="avatar photoball" style="background-image:url('{{me.avatar}}');"></div></div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="meta_block text-center">
-                        <div class="headline"><em>{{me.name}}</div>
+                        <div class="headline"><em>{{me.name}}</em></div>
                         <div class="subheadline">
                             <span ng-if="me.location">{{me.location}}</span>
                             <span ng-if="!me.location">set your location</span>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         <!-- My Bless Events -->
-        <div class="swiper-container" ng-show="myevents">
+        <div class="swiper-container"  ng-class='{"vis-hidden":myevents==false,"visible":myevents==true}'>
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><div class="blackball">Feed homeless</div></div>
                 <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Participating in Swiper -->
-        <div class="swiper-container" ng-show="myjoinedevents">
+        <div class="swiper-container" ng-class='{"vis-hidden":myjoinedevents==false,"visible":myjoinedevents==true}'>
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><div class="blackball">Visit Sick</div></div>
                 <div class="swiper-slide"><div class="blackball">Becah Cleanup</div></div>

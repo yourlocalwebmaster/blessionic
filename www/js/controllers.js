@@ -94,7 +94,7 @@ angular.module('bless.controllers', [])
     console.log('home entered');
   });
 })
-    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $ionicGesture,Restangular,$ionicHistory, $cordovaGeolocation) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $cordovaProgress, $ionicGesture,Restangular,$ionicHistory, $cordovaGeolocation) {
 
         $ionicGesture.on('swiperight', function(){
             $ionicHistory.goBack(-1);
@@ -102,20 +102,13 @@ angular.module('bless.controllers', [])
 
         $scope.setLocation = function(){
             document.addEventListener("deviceready",function(){
-                console.log('settign location');
+
                 var posOptions = {timeout: 10000, enableHighAccuracy: false};
                 $cordovaGeolocation
                     .getCurrentPosition(posOptions)
                     .then(function (position) {
                         var lat  = position.coords.latitude
                         var long = position.coords.longitude
-                        alert(lat+long);
-                        /*try{
-                         var UserLocation = Restangular.one('http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true');
-                         UserLocation.get({'latlng':lat+','+long,'sensor':true}).then(function(response) {
-                         console.log(response);
-                         });
-                         }*/
                         console.log(lat+' '+long);
                     }, function(err) {
                         console.log(err);
@@ -128,7 +121,6 @@ angular.module('bless.controllers', [])
                 var options = {
                     quality: 80,
                     destinationType: Camera.DestinationType.DATA_URL,
-                    //sourceType: Camera.PictureSourceType.CAMERA,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                     allowEdit: true,
                     encodingType: Camera.EncodingType.JPEG,

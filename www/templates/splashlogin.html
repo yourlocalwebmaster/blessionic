@@ -3,16 +3,15 @@
 
         <div class="content">
             <div class="row row-center">
-                <div class="col">
-                    <div class="list list-inset">
-                        <h1 class="white">BLESS</h1>
-                        <em>together, we can bless the world.</em>
-                        <ul ng-if="error">
-                        <li class="assertive">{{error}}</li>
-                    </ul>
-                    </div>
+                <div class="col text-center">
+
+                    <h1 class="white"><img src="img/bless_logo_w.png" style="max-width: 300px; width:100%;" /></h1>
+
                     <form name="loginForm" ng-submit="processLogin()">
                     <div class="list list-inset">
+                        <ul ng-if="error">
+                            <li class="assertive">{{error}}</li>
+                        </ul>
                         <label class="item item-input">
                             <input type="email" required placeholder="email address" id="email" name="email" ng-model="email">
                         </label>
@@ -22,7 +21,7 @@
                             <input type="password" required placeholder="password" id="password" ng-model="password">
                         </label>
                     </div>
-                        <div class="list list-inset"><button type="submit" class="button button-dark fullwidth">Login</button></div>
+                        <div class="list list-inset hide" ><button type="submit" class="button button-dark fullwidth">Login</button></div>
                     </form>
                 </div>
             </div>

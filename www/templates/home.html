@@ -2,19 +2,19 @@
     <ion-content>
         <div class="content">
             <div class="row row-center">
-                <div class="col"><div class="avatar photoball" style="background-image:url('{{me.avatar}}');"></div></div>
+                <div class="col"><div class="avatar photoball" ng-click="updateAvatar()" style="background-image:url('{{me.avatar}}');"></div></div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="meta_block text-center">
                         <div class="headline"><em>{{me.name}}</em></div>
                         <div class="subheadline">
-                            <span ng-if="me.location">{{me.location}}</span>
-                            <span ng-if="!me.location">set your location</span>
+                            <span ng-if="me.region">{{me.region}}</span>
+                            <span ng-if="!me.region" ng-click="setLocation()">{{setlocationverb}}</span>
                         </div>
                         <div class="content userstatus">
                             I'm here to be a blessing in SD and meet other like-minded locals.<br/>
-                            Psalm 143:8
+                            Psalm 143:8 (ps, on click, make this editable..)
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,6 @@
                 <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
             </div>
         </div>
-
-        <div class="row"><a ng-click="logout()" href="">logout</a></div>
         </div>
     </ion-content>
 </ion-view>

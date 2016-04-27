@@ -1,6 +1,6 @@
 angular.module('bless.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, Restangular) {
+.controller('AppCtrl', function($scope,$state, $ionicModal, $timeout, $localStorage, Restangular) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -8,6 +8,14 @@ angular.module('bless.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+    $scope.logout = function(){
+        delete $localStorage.token;
+        $state.go('splashlogin');
+    };
+
+    if(!$localStorage.token){
+        $state.go('splashlogin');
+    }
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -61,7 +69,12 @@ angular.module('bless.controllers', [])
 
 
 })
-.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform){
+.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform,$cordovaGeolocation,$cordovaCamera){
+
+    $scope.$on('$ionicView.enter', function(e) {
+        $scope.loadUserData();
+    });
+
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
     };
@@ -77,44 +90,84 @@ angular.module('bless.controllers', [])
             freeMode: false,
             loop: true
         });
-        console.log('upd');
+    });
+
+    $scope.loadUserData = function(){
         Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
         var User = Restangular.one('user/account');
         User.get({'token':$localStorage.token}).then(function(response) {
             $scope.me = response;
         });
-    });
+    };
 
-    $scope.logout = function(){
-    delete $localStorage.token;
-    $state.go('splashlogin');
-  };
+    $scope.setlocationverb = "set your location";
+    $scope.setLocation = function($event){
 
-  $scope.$on('$ionicView.enter', function(e) {
-    console.log('home entered');
-  });
+        document.addEventListener("deviceready",function(){
+            $scope.setlocationverb = "locating...";
+            var posOptions = {timeout: 10000, enableHighAccuracy: false};
+            $cordovaGeolocation
+                .getCurrentPosition(posOptions)
+                .then(function (position) {
+                    var lat  = position.coords.latitude
+                    var long = position.coords.longitude
+                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    var payload = {"lat":lat,"long":long,"token":$localStorage.token};
+                    Restangular.all('user/account/update/region').post(payload).then(function(response){
+                        if(response.status){
+                            $scope.loadUserData();
+                        }else{
+                            $scope.error = response.message;
+                        }
+                    });
+                }, function(err) {
+                    console.log(err);
+                });
+        });
+    };
+    $scope.updateAvatar = function(){
+            document.addEventListener("deviceready", function () {
+                var options = {
+                    quality: 80,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 200,
+                    targetHeight: 200,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false,
+                    correctOrientation:true
+                };
+
+                $cordovaCamera.getPicture(options).then(function(imageData) {
+                    var image = document.getElementById('myImage');
+                    //image.src = "data:image/jpeg;base64," + imageData;
+                    $scope.me.avatar = "data:image/jpeg;base64," + imageData;
+                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    var payload = {"avatar": $scope.me.avatar,"token": $localStorage.token};
+                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    Restangular.all('user/account/update/avatar').post(payload).then(function(response){
+                        if(response.status){
+
+                        }else{
+                            $scope.errors = response.errors;
+                        }
+                    });
+
+
+                }, function(err) {
+                    // error
+                });
+
+            }, false);
+        };
 })
-    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $cordovaProgress, $ionicGesture,Restangular,$ionicHistory, $cordovaGeolocation) {
+    .controller('CreateAccountCtrl',function($scope, $state, $localStorage, $cordovaCamera, $cordovaProgress, $ionicGesture,Restangular,$ionicHistory) {
 
         $ionicGesture.on('swiperight', function(){
             $ionicHistory.goBack(-1);
         },angular.element(document.querySelector('body')));
-
-        $scope.setLocation = function(){
-            document.addEventListener("deviceready",function(){
-
-                var posOptions = {timeout: 10000, enableHighAccuracy: false};
-                $cordovaGeolocation
-                    .getCurrentPosition(posOptions)
-                    .then(function (position) {
-                        var lat  = position.coords.latitude
-                        var long = position.coords.longitude
-                        console.log(lat+' '+long);
-                    }, function(err) {
-                        console.log(err);
-                    });
-            });
-        };
 
         $scope.setAvatar = function(){
             document.addEventListener("deviceready", function () {
@@ -135,7 +188,7 @@ angular.module('bless.controllers', [])
                     var image = document.getElementById('myImage');
                     //image.src = "data:image/jpeg;base64," + imageData;
                     $scope.avatar = "data:image/jpeg;base64," + imageData;
-                    
+
 
                 }, function(err) {
                     // error

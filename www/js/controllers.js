@@ -100,6 +100,16 @@ angular.module('bless.controllers', [])
         });
     };
 
+    $scope.sampleOutreaches = [
+        {
+            "title": "My title",
+            "description": "My descrption"
+        },{
+            "title": "My title2",
+            "description": "My descrption2"
+        },
+    ];
+
     $scope.setlocationverb = "set your location";
     $scope.setLocation = function($event){
 
@@ -211,4 +221,20 @@ angular.module('bless.controllers', [])
             });
         }
 
+    })
+    .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture){
+        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        //var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
+        //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        var Outreach = Restangular.one('outreach/'+$stateParams.id);
+        Outreach.get().then(function(response){
+                $scope.outreach = response;
+        });
+        $scope.joinOutreach = function(id){
+            console.log("join outreach: "+id);
+        };
+
+        $ionicGesture.on('swiperight', function(){
+            $ionicHistory.goBack(-1);
+        },angular.element(document.querySelector('body')));
     });

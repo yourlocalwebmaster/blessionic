@@ -67,7 +67,16 @@ angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.cont
         templateUrl: 'templates/privacy.html'
       }
     }
-  });
+  })
+      .state('app.outreach',{
+        url: '/outreach/{id:int}',
+        views:{
+          'menuContent':{
+            templateUrl: 'templates/outreach.html',
+            controller: 'OutreachCtrl'
+          }
+        }
+      });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splashlogin');

@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-50 text-center" ng-click="myevents=true;myjoinedevents=false;" ng-class='{"faded":myevents==false}'>
                     <i class="ion-chevron-down"></i><br/>
                     my bless events
@@ -29,30 +29,35 @@
                     <br/>
                     events i've joined
                 </div>
-            </div>
+            </div>-->
         <!-- My Bless Events -->
-        <div class="swiper-container"  ng-class='{"vis-hidden":myevents==false,"visible":myevents==true}'>
+        <!--<div class="swiper-container"  ng-class='{"vis-hidden":myevents==false,"visible":myevents==true}'>
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><div class="blackball">Feed homeless</div></div>
-                <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
-                <div class="swiper-slide"><div class="blackball">Visit Sick</div></div>
-                <div class="swiper-slide"><div class="blackball">Becah Cleanup</div></div>
-                <div class="swiper-slide"><div class="blackball">Cat Visit</div></div>
-                <div class="swiper-slide"><div class="blackball">Run around</div></div>
+                <div class="swiper-slide"><div class="">Feed homeless</div></div>
+                <div class="swiper-slide"><div class="">Cloth Poor</div></div>
+                <div class="swiper-slide"><div class="">Visit Sick</div></div>
+                <div class="swiper-slide"><div class="">Becah Cleanup</div></div>
+                <div class="swiper-slide"><div class="">Cat Visit</div></div>
+                <div class="swiper-slide"><div class="">Run around</div></div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Participating in Swiper -->
-        <div class="swiper-container" ng-class='{"vis-hidden":myjoinedevents==false,"visible":myjoinedevents==true}'>
+        <!--<div class="swiper-container" ng-class='{"vis-hidden":myjoinedevents==false,"visible":myjoinedevents==true}'>
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><div class="blackball">Visit Sick</div></div>
-                <div class="swiper-slide"><div class="blackball">Becah Cleanup</div></div>
-                <div class="swiper-slide"><div class="blackball">Cat Visit</div></div>
-                <div class="swiper-slide"><div class="blackball">Run around</div></div>
-                <div class="swiper-slide"><div class="blackball">Feed homeless</div></div>
-                <div class="swiper-slide"><div class="blackball">Cloth Poor</div></div>
+                <div class="swiper-slide"><div class="">Visit Sick</div></div>
+                <div class="swiper-slide"><div class="">Becah Cleanup</div></div>
+                <div class="swiper-slide"><div class="">Cat Visit</div></div>
+                <div class="swiper-slide"><div class="">Run around</div></div>
+                <div class="swiper-slide"><div class="">Feed homeless</div></div>
+                <div class="swiper-slide"><div class="">Cloth Poor</div></div>
             </div>
-        </div>
+        </div>-->
+            <!-- demo of cards.. -->
+            <div id="cards_container">
+                 <div  ng-include src="'/templates/partials/outreachcard.html'" class="row" ng-repeat="outreach in me.outreaches"></div>
+            </div>
+            <!-- end cards demo -->
         </div>
     </ion-content>
 </ion-view>

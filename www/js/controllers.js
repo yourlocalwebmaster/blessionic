@@ -16,6 +16,8 @@ angular.module('bless.controllers', [])
     if(!$localStorage.token){
         $state.go('splashlogin');
     }
+
+
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -48,11 +50,16 @@ angular.module('bless.controllers', [])
   };
 })
 .controller('LoginSplashCtrl',function($scope,$state,$localStorage, Restangular){
-  $scope.$on('$ionicView.enter', function(e) {
     if($localStorage.token){
-        $state.go('app.home'); // There has to be a faster way to do this.. Maybe hide form until check? progress bar? etc...
+        $state.go('app.home'); // Force HOME..
     }
-  });
+    $scope.footer = true;
+    angular.element(document.querySelectorAll('input')).bind('focus',function(){
+        $scope.footer = false;
+    });
+    angular.element(document.querySelectorAll('input')).bind('blur',function(){
+        $scope.footer = true;
+    });
 
     $scope.processLogin = function(){
         Restangular.setBaseUrl('http://52.27.157.158/api/v1/');

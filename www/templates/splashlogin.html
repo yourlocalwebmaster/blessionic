@@ -13,12 +13,12 @@
                             <li class="assertive">{{error}}</li>
                         </ul>
                         <label class="item item-input">
-                            <input type="email" required placeholder="email address" id="email" name="email" ng-model="email">
+                            <input type="email" required placeholder="email address" id="email" name="email" ng-model="email" ng-focus="footer = false" ng-blur="footer = true">
                         </label>
                         </div>
                     <div class="list list-inset">
                         <label class="item item-input">
-                            <input type="password" required placeholder="password" id="password" ng-model="password">
+                            <input type="password" required placeholder="password" id="password" ng-model="password" ng-focus="footer = false" ng-blur="footer = true">
                         </label>
                     </div>
                         <div class="list list-inset hide" ><button type="submit" class="button button-dark fullwidth">Login</button></div>
@@ -27,8 +27,8 @@
             </div>
         </div>
     </ion-content>
-    <div class="bar bar-footer">
-        <div class="title"><a href="" ui-sref="createaccount">not a member? sign up</a></div>
+    <div class="bar bar-footer" ng-hide="!footer" ng-show="footer" id="create_account_footer">
+        <div class="title"><a href="" ui-sref="createaccount">not a member? sign up {{footer}}</a></div>
     </div>
 </ion-view>
 

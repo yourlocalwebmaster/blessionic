@@ -30,7 +30,18 @@ angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.cont
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
+  .state('gateway',{
+    url: '/gateway',
+    //templateUrl: 'templates/splashlogin.html',
+    controller: function($scope,$state, $localStorage){
+      if($localStorage.token){
+        $state.go('app.home');
+      }
+      else{
+        $state.go('splashlogin')
+      }
+    }
+  })
   .state('splashlogin', {
     url: '/splashlogin',
     templateUrl: 'templates/splashlogin.html',
@@ -79,5 +90,5 @@ angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.cont
       });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/splashlogin');
+  $urlRouterProvider.otherwise('/gateway');
 });

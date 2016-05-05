@@ -54,9 +54,15 @@
             </div>
         </div>-->
             <!-- demo of cards.. -->
-            <div id="cards_container">
-                 <div  ng-include src="'/templates/partials/outreachcard.html'" class="row" ng-repeat="outreach in me.outreaches"></div>
+            <div class="text-center" ng-init="mine=true">
+                <button  class="button button-balanced" ng-click="mine = !mine" ng-show="mine">Outreaches I Made</button>
+                <button  class="button button-balanced" ng-click="mine = !mine" ng-show="!mine">Outreaches I Joined</button>
             </div>
+            <div class="">
+                 <div ng-show="mine"  ng-include src="'/templates/partials/outreachcard.html'" class="row" ng-repeat="outreach in me.outreaches"></div>
+                 <div ng-show="!mine"  ng-include src="'/templates/partials/outreachcard.html'" class="row" ng-repeat="participation in me.participating" ng-init="outreach = participation.outreach"></div>
+            </div>
+
             <!-- end cards demo -->
         </div>
     </ion-content>

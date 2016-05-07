@@ -107,16 +107,6 @@ angular.module('bless.controllers', [])
         });
     };
 
-    $scope.sampleOutreaches = [
-        {
-            "title": "My title",
-            "description": "My descrption"
-        },{
-            "title": "My title2",
-            "description": "My descrption2"
-        },
-    ];
-
     $scope.setlocationverb = "set your location";
     $scope.setLocation = function($event){
 
@@ -217,7 +207,6 @@ angular.module('bless.controllers', [])
         $scope.processCreateAccount = function() {
             Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
             var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
-            //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
             Restangular.all('user').post(payload).then(function(response){
                 if(response.status){
                     $localStorage.token = response.token;
@@ -231,11 +220,10 @@ angular.module('bless.controllers', [])
     })
     .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture){
         Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
-        //var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
-        //Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
         var Outreach = Restangular.one('outreach/'+$stateParams.id);
-        Outreach.get().then(function(response){
+        Outreach.get({"token": $localStorage.token}).then(function(response){
                 $scope.outreach = response;
+                $scope.$broadcast('address',$scope.outreach.event_address + ' ' + $scope.outreach.event_address2 + ' ' + $scope.outreach.event_city + ' ' + $scope.outreach.event_state + ' ' + $scope.outreach.event_zip);
         });
         $scope.joinOutreach = function(id){
             console.log("join outreach: "+id);
@@ -244,4 +232,39 @@ angular.module('bless.controllers', [])
         $ionicGesture.on('swiperight', function(){
             $ionicHistory.goBack(-1);
         },angular.element(document.querySelector('body')));
+    })
+
+    /** You should TOTALLY UES NGMAP.. THAT WAY I CAN ITERATE THROUGH MARKERS etc with NG repeat....**/
+    .controller('MapCtrl', function( $scope,$state){
+        $scope.initMap = function (address){
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: -34.397, lng: 150.644}
+            });
+            var geocoder = new google.maps.Geocoder();
+            $scope.geocodeAddress(geocoder, map, address);
+            google.maps.event.trigger(map, 'resize');
+        };
+
+        $scope.geocodeAddress = function(geocoder, resultsMap, addressString) {
+
+            geocoder.geocode({'address': addressString}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        angular.element(document).ready(function(){
+            $scope.$on('address', function(event, address){ //(WIL NEED to be broadcasted from outreach (or other parent controller))
+                $scope.initMap(address);
+            });
+        });
+
     });

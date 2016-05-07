@@ -2,7 +2,14 @@
     <ion-content>
         <div class="list list-inset" id="outreachContent">
             <h2>{{outreach.title}}</h2>
+
              {{outreach.description}}
+            <button class="button button-balanced" ng-show="!outreach.joined">Join!</button>
+            <button class="button button-balanced" ng-show="outreach.joined">Leave!</button>
         </div>
+
+
+        <div id="map" ng-controller="MapCtrl"></div>
+
     </ion-content>
 </ion-view>

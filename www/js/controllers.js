@@ -1,4 +1,4 @@
-angular.module('bless.controllers', [])
+angular.module('bless.controllers', ['ngMap'])
 
 .controller('AppCtrl', function($scope,$state, $ionicModal, $timeout, $localStorage, Restangular) {
   // With the new view caching in Ionic, Controllers are only called
@@ -218,13 +218,22 @@ angular.module('bless.controllers', [])
         }
 
     })
-    .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture){
+    .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture, NgMap, GeoCoder){
+
         Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
         var Outreach = Restangular.one('outreach/'+$stateParams.id);
         Outreach.get({"token": $localStorage.token}).then(function(response){
                 $scope.outreach = response;
-                $scope.$broadcast('address',$scope.outreach.event_address + ' ' + $scope.outreach.event_address2 + ' ' + $scope.outreach.event_city + ' ' + $scope.outreach.event_state + ' ' + $scope.outreach.event_zip);
+                NgMap.getMap().then(function(map){$scope.map = map;});
+            //$scope.$broadcast('address',$scope.outreach.event_address + ' ' + $scope.outreach.event_address2 + ' ' + $scope.outreach.event_city + ' ' + $scope.outreach.event_state + ' ' + $scope.outreach.event_zip);
+                $scope.address = $scope.outreach.event_address + ' ' + $scope.outreach.event_address2 + ' ' + $scope.outreach.event_city + ' ' + $scope.outreach.event_state + ' ' + $scope.outreach.event_zip
+                GeoCoder.geocode({address: $scope.address }).then(function(result){
+                    $scope.lat = result[0].geometry.location.lat();
+                    $scope.lng = result[0].geometry.location.lng();
+                });
         });
+
+
         $scope.joinOutreach = function(id){
             console.log("join outreach: "+id);
         };
@@ -232,39 +241,5 @@ angular.module('bless.controllers', [])
         $ionicGesture.on('swiperight', function(){
             $ionicHistory.goBack(-1);
         },angular.element(document.querySelector('body')));
-    })
-
-    /** You should TOTALLY UES NGMAP.. THAT WAY I CAN ITERATE THROUGH MARKERS etc with NG repeat....**/
-    .controller('MapCtrl', function( $scope,$state){
-        $scope.initMap = function (address){
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: {lat: -34.397, lng: 150.644}
-            });
-            var geocoder = new google.maps.Geocoder();
-            $scope.geocodeAddress(geocoder, map, address);
-            google.maps.event.trigger(map, 'resize');
-        };
-
-        $scope.geocodeAddress = function(geocoder, resultsMap, addressString) {
-
-            geocoder.geocode({'address': addressString}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                } else {
-                    console.log('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
-
-        angular.element(document).ready(function(){
-            $scope.$on('address', function(event, address){ //(WIL NEED to be broadcasted from outreach (or other parent controller))
-                $scope.initMap(address);
-            });
-        });
 
     });

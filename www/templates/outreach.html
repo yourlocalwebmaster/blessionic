@@ -8,8 +8,19 @@
             <button class="button button-balanced" ng-show="outreach.joined">Leave!</button>
         </div>
 
-
-        <div id="map" ng-controller="MapCtrl"></div>
-
+        <!--<div id="map" ng-controller="MapCtrl"></div>-->
+        <map center="{{lat}},{{lng}}" zoom="12" id="map">
+            <marker
+                     clickable="true"
+                     on-click="showInfoWindow('outreachInfoWindow')"
+                     position="[{{lat}},{{lng}}]"
+                     draggable="false">
+            </marker>
+            <info-window id="outreachInfoWindow">
+                <div ng-non-bindable="">
+                    <h1></h1>
+                </div>
+            </info-window>
+        </map>
     </ion-content>
 </ion-view>

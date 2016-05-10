@@ -195,15 +195,12 @@ angular.module('bless.controllers', ['ngMap'])
                     var image = document.getElementById('myImage');
                     //image.src = "data:image/jpeg;base64," + imageData;
                     $scope.avatar = "data:image/jpeg;base64," + imageData;
-
-
                 }, function(err) {
                     // error
                 });
 
             }, false);
         };
-
         $scope.processCreateAccount = function() {
             Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
             var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
@@ -216,7 +213,6 @@ angular.module('bless.controllers', ['ngMap'])
                 }
             });
         }
-
     })
     .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture, NgMap, GeoCoder){
 
@@ -233,9 +229,19 @@ angular.module('bless.controllers', ['ngMap'])
                 });
         });
 
+        $scope.joinOutreach = function(){
+            var outreachid = $scope.outreach.id;
+            var payload = {"token": $localStorage.token};
+            Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+            Restangular.all('user/outreach/join/'+outreachid).post(payload).then(function(response){
+                if(response.status){
+                    console.log(response);
+                }else{
+                    console.log(response);
+                    $scope.errors = response.errors;
+                }
+            });
 
-        $scope.joinOutreach = function(id){
-            console.log("join outreach: "+id);
         };
 
         $ionicGesture.on('swiperight', function(){

@@ -62,7 +62,7 @@ angular.module('bless.controllers', ['ngMap'])
     });
 
     $scope.processLogin = function(){
-        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
         var payload = {"password":this.password,"email":this.email};
         Restangular.all('user/login').post(payload).then(function(response){
             if(response.status){
@@ -100,7 +100,7 @@ angular.module('bless.controllers', ['ngMap'])
     });
 
     $scope.loadUserData = function(){
-        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
         var User = Restangular.one('user/account');
         User.get({'token':$localStorage.token}).then(function(response) {
             $scope.me = response;
@@ -118,7 +118,7 @@ angular.module('bless.controllers', ['ngMap'])
                 .then(function (position) {
                     var lat  = position.coords.latitude
                     var long = position.coords.longitude
-                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
                     var payload = {"lat":lat,"long":long,"token":$localStorage.token};
                     Restangular.all('user/account/update/region').post(payload).then(function(response){
                         if(response.status){
@@ -151,9 +151,9 @@ angular.module('bless.controllers', ['ngMap'])
                     var image = document.getElementById('myImage');
                     //image.src = "data:image/jpeg;base64," + imageData;
                     $scope.me.avatar = "data:image/jpeg;base64," + imageData;
-                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
                     var payload = {"avatar": $scope.me.avatar,"token": $localStorage.token};
-                    Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+                    Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
                     Restangular.all('user/account/update/avatar').post(payload).then(function(response){
                         if(response.status){
 
@@ -202,7 +202,7 @@ angular.module('bless.controllers', ['ngMap'])
             }, false);
         };
         $scope.processCreateAccount = function() {
-            Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+            Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
             var payload = {"password":this.password,"email":this.email,"name":this.name,"notifications":this.notifications,"avatar": $scope.avatar};
             Restangular.all('user').post(payload).then(function(response){
                 if(response.status){
@@ -216,7 +216,7 @@ angular.module('bless.controllers', ['ngMap'])
     })
     .controller('OutreachCtrl', function($scope, $state, $stateParams, $localStorage, $ionicHistory, Restangular, $ionicGesture, NgMap, GeoCoder){
 
-        Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+        Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
         var Outreach = Restangular.one('outreach/'+$stateParams.id);
         Outreach.get({"token": $localStorage.token}).then(function(response){
                 $scope.outreach = response;
@@ -232,7 +232,7 @@ angular.module('bless.controllers', ['ngMap'])
         $scope.joinOutreach = function(){
             var outreachid = $scope.outreach.id;
             var payload = {"token": $localStorage.token};
-            Restangular.setBaseUrl('http://52.27.157.158/api/v1/');
+            Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
             Restangular.all('user/outreach/join/'+outreachid).post(payload).then(function(response){
                 if(response.status){
                     console.log(response);
@@ -241,7 +241,6 @@ angular.module('bless.controllers', ['ngMap'])
                     $scope.errors = response.errors;
                 }
             });
-
         };
 
         $ionicGesture.on('swiperight', function(){

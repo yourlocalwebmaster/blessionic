@@ -4,7 +4,7 @@
             <h2>{{outreach.title}}</h2>
 
              {{outreach.description}}
-            <button class="button button-balanced" ng-click="joinOutreach()" ng-show="!outreach.joined">Join!</button>
+            <button class="button button-balanced" ng-click="joinOutreach()" ng-show="!outreach.joined && me.id != ">Join!</button>
             <button class="button button-balanced" ng-show="outreach.joined">Leave!</button>
         </div>
         <!--<div id="map" ng-controller="MapCtrl"></div>-->

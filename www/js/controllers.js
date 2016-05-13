@@ -37,7 +37,6 @@ angular.module('bless.controllers', ['ngMap'])
   $scope.login = function() {
     $scope.modal.show();
   };
-
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
@@ -73,14 +72,14 @@ angular.module('bless.controllers', ['ngMap'])
             }
         });
     };
-
-
 })
-.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform,$cordovaGeolocation,$cordovaCamera){
+.controller('HomeCtrl', function($scope,$state,$localStorage, Restangular,$ionicPlatform,$cordovaGeolocation,$cordovaCamera, BlessUserService){
 
-    $scope.$on('$ionicView.enter', function(e) {
-        $scope.loadUserData();
-    });
+
+        BlessUserService.loadMe().then(function(response){
+            $scope.me = response;
+        });
+
 
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -98,14 +97,6 @@ angular.module('bless.controllers', ['ngMap'])
             loop: true
         });
     });
-
-    $scope.loadUserData = function(){
-        Restangular.setBaseUrl('http://52.38.244.208/api/v1/');
-        var User = Restangular.one('user/account');
-        User.get({'token':$localStorage.token}).then(function(response) {
-            $scope.me = response;
-        });
-    };
 
     $scope.setlocationverb = "set your location";
     $scope.setLocation = function($event){

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.controllers','bless.directives','bless.services','ngStorage','ngCordova'])
+angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.controllers','bless.directives','bless.services','ngStorage','ngCordova','gilbox.kineticSlider','angular-carousel'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -54,6 +54,15 @@ angular.module('bless', ['ionic','ionic.service.core','restangular', 'bless.cont
           'menuContent':{
             templateUrl: 'templates/home.html',
             controller: 'HomeCtrl'
+          }
+        }
+      })
+      .state('app.profile', {
+        url: '/profile',
+        views:{
+          'menuContent':{
+            templateUrl: 'templates/profile.html',
+            controller: 'ProfileCtrl'
           }
         }
       })

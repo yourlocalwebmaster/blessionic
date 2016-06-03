@@ -78,11 +78,11 @@ angular.module('bless.controllers', ['ngMap'])
     .controller('MainSliderCtrl',function($scope,$state){
         $scope.mainslides = [{
             id: 1,
-            img: 'http://farm4.staticflickr.com/3666/12679059445_0bac555ecf.jpg'
+            img: 'img/temp_slide.jpg'
         },
             {
                 id: 2,
-                img: 'http://farm4.staticflickr.com/3666/12679059445_0bac555ecf.jpg'
+                img: 'img/temp_slide.jpg'
             }];
     })
     .controller('ProfileCtrl', function ($scope, $state, $localStorage, Restangular, $cordovaGeolocation, $cordovaCamera, BlessUserService) {

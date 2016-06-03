@@ -115,11 +115,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 /* End Transparent Menu */
 /* Angular Carousel */
 ul[rn-carousel]{
-    height:300px;
+    height:200px;
 }
 .bgimage{
-    height: 300px; !important;
+    height: 200px; !important;
     background-size:cover;
+    background-position: center;
 }
 .carouselhomewrap{
     -webkit-box-shadow: 0 4px 4px 0 rgba(0,0,0,.4);
@@ -195,4 +196,42 @@ ul[rn-carousel]{
 #map {
     width: 100%;
     height: 50%;
+}
+.home_slider{
+    padding-top:5px;
+    padding-bottom:5px;
+    background: #f2f2f2;
+}
+.home_slider .kinetic-slider-content a{
+    width: 200px; /* originally 200px */
+    height: 200px; /* originally 200px */
+
+}
+
+.home_slider .kinetic-slider-content a img{
+    width:100%;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.splitLeftText{
+    font-size:20px;
+    font-weight:600;
+    padding-right:5px;
+    text-align: right;
+}
+.splitRightText{
+    font-size:12px;
+    padding-left:5px;
+    text-align:left;
+    line-height:12px;
+}
+.morepadding{
+    padding:40px 20px;
+}
+.text-sub{
+    vertical-align: sub;
+}
+.dd_arrow{
+    font-size:20px;
 }

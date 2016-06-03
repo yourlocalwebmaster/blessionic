@@ -1,0 +1,29 @@
+{
+  "name": "kinetic-slider",
+  "main": "./dist/gilbox-kinetic-slider.js",
+  "description": "Kinetic Slider for AngularJS",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gilbox/kinetic-slider.git"
+  },
+  "dependencies": {
+    "angular": "*",
+    "angular-mousewheel": "~1.0.4"
+  },
+  "ignore": [
+    "node_modules",
+    "components",
+    "lib"
+  ],
+  "homepage": "https://github.com/gilbox/kinetic-slider",
+  "_release": "0ef45869ed",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0ef45869edf6ebcac39b174251a3b84b8e04c58d"
+  },
+  "_source": "https://github.com/gilbox/kinetic-slider.git",
+  "_target": "*",
+  "_originalSource": "kinetic-slider",
+  "_direct": true
+}

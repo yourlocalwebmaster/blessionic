@@ -1,0 +1,70 @@
+<ion-view view-title="Profile" name="app-profile">
+    <ion-content>
+        <div class="content">
+            <div class="row row-center">
+                <div class="col"><div class="avatar photoball" ng-click="updateAvatar()" style="background-image:url('{{me.avatar}}');"></div></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="meta_block text-center">
+                        <div class="headline"><em>{{me.name}}</em></div>
+                        <div class="subheadline">
+                            <span ng-if="me.region">{{me.region}}</span>
+                            <span ng-if="!me.region" ng-click="setLocation()">{{setlocationverb}}</span>
+                        </div>
+                        <div class="content userstatus">
+                            I'm here to be a blessing in SD and meet other like-minded locals.<br/>
+                            Psalm 143:8 (ps, on click, make this editable..)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-50 text-center" ng-click="myevents=true;myjoinedevents=false;" ng-class='{"faded":myevents==false}'>
+                    <i class="ion-chevron-down"></i><br/>
+                    my bless events
+                </div>
+                <div class="col-50 text-center" ng-click="myevents=false;myjoinedevents=true;" ng-class='{"faded":myjoinedevents==false}'>
+                    <i class="ion-chevron-down"></i>
+                    <br/>
+                    events i've joined
+                </div>
+            </div>-->
+        <!-- My Bless Events -->
+        <!--<div class="swiper-container"  ng-class='{"vis-hidden":myevents==false,"visible":myevents==true}'>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><div class="">Feed homeless</div></div>
+                <div class="swiper-slide"><div class="">Cloth Poor</div></div>
+                <div class="swiper-slide"><div class="">Visit Sick</div></div>
+                <div class="swiper-slide"><div class="">Becah Cleanup</div></div>
+                <div class="swiper-slide"><div class="">Cat Visit</div></div>
+                <div class="swiper-slide"><div class="">Run around</div></div>
+            </div>
+        </div>-->
+
+        <!-- Participating in Swiper -->
+        <!--<div class="swiper-container" ng-class='{"vis-hidden":myjoinedevents==false,"visible":myjoinedevents==true}'>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><div class="">Visit Sick</div></div>
+                <div class="swiper-slide"><div class="">Becah Cleanup</div></div>
+                <div class="swiper-slide"><div class="">Cat Visit</div></div>
+                <div class="swiper-slide"><div class="">Run around</div></div>
+                <div class="swiper-slide"><div class="">Feed homeless</div></div>
+                <div class="swiper-slide"><div class="">Cloth Poor</div></div>
+            </div>
+        </div>-->
+            <!-- demo of cards.. -->
+            <div class="text-center" ng-init="mine=true">
+                <button  class="button button-balanced" ng-click="mine = !mine" ng-show="mine">Outreaches I Made</button>
+                <button  class="button button-balanced" ng-click="mine = !mine" ng-show="!mine">Outreaches I Joined</button>
+            </div>
+            <div class="">
+                 <div ng-show="mine"  ng-include src="'templates/partials/outreachcard.html'" class="row" ng-repeat="outreach in me.outreaches"></div>
+                 <div ng-show="!mine"  ng-include src="'templates/partials/outreachcard.html'" class="row" ng-repeat="participation in me.participating" ng-init="outreach = participation.outreach"></div>
+            </div>
+
+            <!-- end cards demo -->
+        </div>
+    </ion-content>
+</ion-view>
+
